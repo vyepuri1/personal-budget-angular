@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Budget</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+    <nav class="menu">
+        <ul>
+            <!-- A11y change -->
+            <li><a href="/">Home</a></li>
+            <!-- A11y change -->
+            <li><a href="about.html">About</a></li>
+            <!-- A11y change -->
+            <li><a href="login.html">Login</a></li>
+            <li><a href="https://google.com" target="_blank">Google</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero">
+        <h1>Personal Budget</h1>
+        <h2>A personal-budget management app</h2>
+    </div>
+
+    <div class="container center">
+
+        <div class="page-area">
+
+            <div class="text-box">
+                <h1>Stay on Track</h1>
+                <p>
+                    Do you know where you are spending your money? If you stop to track it down,
+                    you might be surprised! Proper budget management depends on real data, and this
+                    app will help you with that!
+                </p>
+            </div>
+    
+            <div class="text-box">
+                <!-- SEO change -->
+                <h1>Notifications</h1>
+                <!-- Semantic HTML change -->
+                <p>
+                    Receive alerts when important events occur.
+                </p>
+            </div>
+    
+            <div class="text-box">
+                <!-- SEO change -->
+                <h1>Incomes</h1>
+                <!-- Semantic HTML change -->
+                <p>
+                    Stay informed about your income for faster debt repayment!
+                </p>
+            </div>
+    
+            <div class="text-box">
+                <!-- SEO change -->
+                <h1>Secured and Free</h1>
+                <!-- Semantic HTML change -->
+                <p>
+                    This app is secure and free! You are the only one holding your data.
+                </p>
+            </div>
+    
+            <div class="text-box">
+                <h1>Alerts</h1>
+                <p>
+                    Receive alerts when your budget limits are reached to avoid overspending.
+                </p>
+            </div>
+
+            <div class="text-box">
+                <h1>Results</h1>
+                <p>
+                    People who stick to a financial plan and budget every expense get out of debt faster!
+                    They live happier lives, spending without guilt or fear because everything is accounted for.
+                </p>
+            </div>
+    
+            <div class="text-box">
+                <h1>Free Chart</h1>
+                <p>
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer class="bottom">
+        <div class="center">
+            All rights reserved &copy; Venkata Jagadish Kumar Yepuri
+            <div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+    
+        <script>
+            var dataSource = {
+                    datasets: [
+                        {
+                            data: [],
+                            backgroundColor: [
+                                '#ffcd56',
+                                '#ff6384',
+                                '#36a2eb',
+                                '#fd6b19',
+                            ]
+                        }
+                    ],
+                    labels: [
+                    'Eat Out',
+                    'Rent',
+                    'Groceries'
+                    ]
+                };
+    
+            function createChart() {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: dataSource
+                });
+            }
+    
+            function getBudget() {
+                axios.get('http://localhost:3000/budget')
+                .then(function (res) {
+                    for (var i = 0; i < res.data.myBudget.length; i++) {
+                        dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
+                        dataSource.labels[i] = res.data.myBudget[i].title;
+                        createChart();
+                    }
+                });
+            }
+    
+            getBudget();
+        </script>
+    
+    </body>
+    </html>
