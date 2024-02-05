@@ -118,3 +118,7 @@ body {
       stroke-width: 2px;
       fill: none;
   }
+
+  #pie-chart{
+    height: 500px;
+  }
