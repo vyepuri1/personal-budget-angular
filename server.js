@@ -27,7 +27,7 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/budget', (req, res) => {
-  res.json(data);
+  res.send(data);
 });
 
 
